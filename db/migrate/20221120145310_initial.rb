@@ -8,6 +8,7 @@ class Initial < ActiveRecord::Migration[7.0]
     end
 
     create_table :wallets do |t|
+      t.name :string
       t.string :hashed_id, null: false, index: { unique: true }
       t.references :user, null: false, foreign_key: true, index: true, on_delete: :cascade
 

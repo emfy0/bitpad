@@ -1,0 +1,47 @@
+@import '@picocss/pico/scss/pico';
+
+.standart_color {
+  --color: var(--h1-color);
+}
+
+.h2 {
+  font-size: 1.5rem;
+}
+
+.inlined {
+  display: inline;
+}
+
+[data-tooltip]:not(a, button, input) {
+  border-bottom: none;
+  text-decoration: none;
+  cursor: help;
+  }
+
+.mt-2 {
+  margin-top: 1.5rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
+.ml-1 {
+  margin-left: 0.25rem;
+}
+
+html[aria-busy="true"] {
+  &::before {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 0.1875em solid currentColor;
+    border-radius: 1em;
+    border-right-color: transparent;
+    content: "";
+    vertical-align: text-bottom;
+    vertical-align: -.125em; // Visual alignment
+    animation:none;
+    opacity: 0;
+  }
+}

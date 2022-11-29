@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    title Bitpad
+    meta(name="viewport" content="width=device-width,initial-scale=1")
+    link rel="icon" href==image_path('favicon.svg', skip_pipeline: true) sizes="any" type="image/svg+xml"
+
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+
+  body
+    div.container
+      nav
+        ul
+          li
+            strong
+              = link_to "Bitpad", root_path, class: 'standart_color h2'
+        ul
+          - if current_user
+            li
+              = button "sign out", auth_sign_out_path, method: :delete
+          - else
+            li
+              = link_to "sign up", auth_sign_up_path, role: 'button'
+            li
+              = link_to "sign in", auth_sign_in_path, role: 'button'
+
+    div.container
+      = render 'shared/flash'
+
+    main.container
+      = yield

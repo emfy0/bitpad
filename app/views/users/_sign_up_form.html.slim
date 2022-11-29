@@ -1,0 +1,42 @@
+= form_with model: @user_form, scope: :user, url: users_path, html: {data: { controller: 'sign-in' }, id: :sign_up_form} do |f|
+    = f.label :login
+
+    - login_field_params = { autocomplete: "nickname", required: true }
+    - login_field_params['aria-invalid'] = 'true' if @errors&.key?(:login)
+
+    = f.text_field :login, login_field_params
+      - if @errors&.key?(:login)
+      mark
+        small
+          = @errors.full_messages_for :login
+
+    = f.label :token,
+              class: 'inlined'
+
+    div.inlined data-tooltip="Hexedecimal string of 32 characters"
+      =render 'shared/question_mark'
+
+    - token_field_params = { required: true, 'data-sign-in-target' => 'token' }
+    - token_field_params['aria-invalid'] = 'true' if @errors&.key?(:token)
+
+    = f.text_field :token, token_field_params
+    - if @errors&.key?(:token).present?
+      mark
+        small
+          = @errors.full_messages_for(:token).join(', ')
+
+
+    button.secondary.mt-2(
+      type='button'
+      data-tooltip="You can choose token yourself or we can generate it for you"
+      data-action="sign-in#generateToken"
+    )
+      | Generate token
+
+    = f.submit 'Register', class: 'contrast'
+
+    div.grid style="justify-items: center;"
+      div
+        span
+        ' Already have an account?
+        = link_to 'Sign in!', auth_sign_in_path

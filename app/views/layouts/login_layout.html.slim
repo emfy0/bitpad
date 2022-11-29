@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title Bitpad
+    meta(name="viewport" content="width=device-width,initial-scale=1")
+    link rel="icon" href==image_path('favicon.svg', skip_pipeline: true) sizes="any" type="image/svg+xml"
+
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+
+  body
+    = render 'shared/flash'
+
+    main.container
+      = yield

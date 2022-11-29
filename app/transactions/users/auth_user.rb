@@ -1,6 +1,6 @@
 require 'dry/transaction'
 
-class User::AuthUser
+class Users::AuthUser
   include Dry::Transaction
 
   step :find_user

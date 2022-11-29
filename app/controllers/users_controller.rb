@@ -1,25 +1,42 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: %i[me]
+
   def new
-    @user ||= User.new
+    @user_from ||= Users::CreateForm.new
+
+    render :new, layout: 'login_layout'
   end
 
   def create
     create_params = params.require(:user).permit(:login, :token)
 
-    @user = User.new(create_params)
+    case Users::CreateUser.new.(create_params)
+    in Success(user)
+      cookies.permanent.encrypted[:_user] =
+        { login: create_params[:login], token: create_params[:token] }.to_json
 
-    if @user.save
-      cookies.permanent.encrypted[:_user] = {login: create_params[:login], token: create_params[:token]}.to_json
+      redirect_to me_users_path, notice: 'User was successfully created.'
+    in Failure(user_from: user_form, errors: errors)
+      @user_form = user_form
+      @errors = errors
 
-      redirect_to user_path(@user), notice: 'User was successfully created.'
-    else
       flash.now[:alert] = 'Check your data and try again.'
 
-      render :new
+      respond_to do |format|
+        format.turbo_stream do
+          render(
+            turbo_stream: turbo_stream.replace(:flash, partial: 'shared/flash') +
+              turbo_stream.replace(:sign_up_form, partial: 'users/sign_up_form')
+          )
+        end
+        format.html do
+          render :new, layout: 'login_layout'
+        end
+      end
     end
   end
 
-  def show
+  def me
     @user = current_user
   end
 end

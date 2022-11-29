@@ -1,0 +1,21 @@
+article.grid
+  div
+    hgroup
+      h1 Sign in
+      h2 Fill in the fields below
+    = form_with model: @user_form, scope: :user, url: auth_create_session_path do |f|
+      = f.label :login
+      = f.text_field :login, autocomplete: "nickname", required: true
+
+      = f.label :token
+      = f.text_field :token, required: true
+
+      = f.submit 'Sign in', class: 'contrast'
+
+      div.grid style="justify-items: center;"
+        div
+          span
+           ' New here?
+          = link_to 'Sign up now!', auth_sign_up_path
+  div
+    = render 'shared/logo_svg'

@@ -1,0 +1,13 @@
+div.container#flash
+  - flash.each do |type, message|
+    article(
+      style="margin-bottom: 0px;"
+      data-controller="flash"
+      data-action="click->flash#hide"
+    )
+      div.grid
+        - if type == 'alert'
+          mark =flash.alert
+        - else
+          ins =flash.notice
+

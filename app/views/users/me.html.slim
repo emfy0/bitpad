@@ -1,0 +1,14 @@
+p user login
+= @user.login
+
+p user password
+= @user.token_digest
+
+
+= @user.wallets
+
+section
+  = form_with @wallet_from, scope: :wallet, url: wallets_path do |f|
+    = f.label :name
+    = f.text_field :name
+    = f.submit 'Create wallet'

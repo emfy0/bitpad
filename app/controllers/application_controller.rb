@@ -1,10 +1,14 @@
+require 'dry/monads'
+
 class ApplicationController < ActionController::Base
   attr_reader :current_user, :token
+
+  helper_method :current_user
 
   before_action :authenticate_user
 
   rescue_from ActionController::InvalidAuthenticityToken do |exception|
-    сookies.delete(:_user)
+    cookies.delete(:_user)
     raise exception
   end
 
@@ -12,17 +16,20 @@ class ApplicationController < ActionController::Base
     user_cookie =
       if (cookie = cookies.encrypted[:_user])
         JSON.parse(cookie, symbolize_names: true)
-      else
-        nil
       end
 
-    User::AuthUser.new.(user_cookie) do |r|
-      r.success do |result|
-        @current_user = result[:user]
-        @token = result[:token]
-      end
-
-      r.failure {}
+    case Users::AuthUser.new.(user_cookie)
+    in Success(user:, token:)
+      @current_user = user
+      @token = token
+    else
     end
+  end
+
+  def authenticate_user!
+    return if current_user
+
+    flash[:alert] = 'You need to login to access this page.'
+    redirect_to auth_sign_in_path
   end
 end
