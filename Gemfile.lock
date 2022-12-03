@@ -68,6 +68,10 @@ GEM
       tzinfo (~> 2.0)
     bcrypt (3.1.18)
     bindex (0.8.1)
+    bitcoin-ruby (0.0.20)
+      eventmachine
+      ffi
+      scrypt
     bootsnap (1.14.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -97,6 +101,11 @@ GEM
       dry-matcher (~> 0.10)
       dry-monads (~> 1.6)
     erubi (1.11.0)
+    eventmachine (1.2.7)
+    ffi (1.15.5)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
@@ -125,8 +134,11 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
+    nokogiri (1.13.9-aarch64-linux)
+      racc (~> 1.4)
     nokogiri (1.13.9-arm64-darwin)
       racc (~> 1.4)
+    pg (1.4.5)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -167,6 +179,8 @@ GEM
     rake (13.0.6)
     reline (0.3.1)
       io-console (~> 0.5)
+    scrypt (3.0.7)
+      ffi-compiler (>= 1.0, < 2.0)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -181,7 +195,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.5.4-arm64-darwin)
     stimulus-rails (1.1.1)
       railties (>= 6.0.0)
     temple (0.8.2)
@@ -205,22 +218,24 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
+  aarch64-linux
   arm64-darwin-21
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
+  bitcoin-ruby
   bootsnap
   cssbundling-rails
   debug
   dry-monads
   dry-transaction
   jsbundling-rails
+  pg
   pry-rails
   puma (~> 5.0)
   rails (~> 7.0.4)
   slim-rails
   sprockets-rails
-  sqlite3 (~> 1.4)
   stimulus-rails
   turbo-rails
   tzinfo-data

@@ -1,14 +1,36 @@
-p user login
-= @user.login
+div(
+  data-controller="add-wallet-modal wallets"
+  data-wallets-url-value==exchange_rates_fetch_path
+)
 
-p user password
-= @user.token_digest
+  div.grid
+    strong class="standart_color h2" Your wallets
+    div style="justify-self: end;"
+      a(
+        data-action="add-wallet-modal#open"
+        data-turbo="false"
+        role="button"
+        href="#"
+        class="inlined outline"
+      ) +
+
+  div style="margin-top: 2rem;"
+    details data-wallets-target="wallet" data-amount="1"
+      summary style="text-align: center;" Wallet 1
+      .grid style="justify-items: center;"
+        hgroup
+          h5 class="standart_color" 0.00000000 BTC
+          h6 class="rate" ~ 0 USD
+        small style="margin-top: 1rem; margin-bottom: 1rem;"
+          strong tb1q4280xax2lt0u5a5s9hd4easuvzalm8v9ege9ge
+        div style="margin-top: 1rem;"
+          a(
+            data-action="add-wallet-modal#open"
+            data-turbo="false"
+            role="button"
+            href="#"
+            class="inlined secondary"
+            ) Make a pay
 
 
-= @user.wallets
-
-section
-  = form_with @wallet_from, scope: :wallet, url: wallets_path do |f|
-    = f.label :name
-    = f.text_field :name
-    = f.submit 'Create wallet'
+  =render 'add_wallet_modal'

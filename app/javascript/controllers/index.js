@@ -4,8 +4,14 @@
 
 import { application } from "./application"
 
+import AddWalletModalController from "./add_wallet_modal_controller"
+application.register("add-wallet-modal", AddWalletModalController)
+
 import FlashController from "./flash_controller"
 application.register("flash", FlashController)
 
 import SignInController from "./sign_in_controller"
 application.register("sign-in", SignInController)
+
+import WalletsController from "./wallets_controller"
+application.register("wallets", WalletsController)

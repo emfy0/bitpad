@@ -9,16 +9,22 @@ class Users::CreateUser
   private
 
   def validate_params(params)
-    user_from = Users::CreateForm.new(params)
+    user_form = Users::CreateForm.new(params)
 
-    if user_from.validate
-      Success(params)
+    if user_form.validate
+      Success(params: user_form.attributes, user_form:)
     else
-      Failure(user_from:, errors: user_from.errors)
+      Failure(user_form:, errors: user_form.errors)
     end
   end
 
-  def create_user(params)
-    Success(User.create(params))
+  def create_user(params:, user_form:)
+    new_user = User.create(params)
+
+    if new_user.valid?
+      Success(new_user)
+    else
+      Failure(user_form:, errors: new_user.errors)
+    end
   end
 end

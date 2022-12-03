@@ -1,0 +1,29 @@
+dialog(
+  id="modal-example"
+  data-add-wallet-modal-target="modal"
+  open="false"
+)
+  article
+    header
+      strong Add Wallet
+      a(
+        href="#close"
+        aria-label="Close"
+        class="close"
+        data-action="add-wallet-modal#close"
+        data-turbo="false"
+      )
+    a(href="#confirm"
+      role="button"
+      data-target="modal-example"
+      onclick="toggleModal(event)"
+      style="width: 100%; margin-bottom: 10px;"
+      class="contrast outline"
+    ) Import wallet
+    a(href="#confirm"
+      role="button"
+      data-target="modal-example"
+      onclick="toggleModal(event)"
+      style="width: 100%;"
+      class="contrast outline"
+    ) Generate wallet

@@ -5,10 +5,11 @@
     - login_field_params['aria-invalid'] = 'true' if @errors&.key?(:login)
 
     = f.text_field :login, login_field_params
-      - if @errors&.key?(:login)
-      mark
-        small
-          = @errors.full_messages_for :login
+    - if @errors&.key?(:login)
+      div
+        mark
+          small
+            = @errors.full_messages_for(:login).join(', ')
 
     = f.label :token,
               class: 'inlined'
@@ -21,9 +22,10 @@
 
     = f.text_field :token, token_field_params
     - if @errors&.key?(:token).present?
-      mark
-        small
-          = @errors.full_messages_for(:token).join(', ')
+      div
+        mark
+          small
+            = @errors.full_messages_for(:token).join(', ')
 
 
     button.secondary.mt-2(

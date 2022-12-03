@@ -21,9 +21,20 @@ class WalletsController < ApplicationController
     @wallet = current_user.wallets.find_by(hashed_id: params[:id])
   end
 
-  private
+  def new_import
+    @wallet_form ||= Wallets::ImportForm.new
+  end
 
-  def authenticate_user!
-    redirect_to sessions_path unless current_user
+  def import
+    import_params = params.require(:wallet).permit(:base58)
+
+    case Wallets::ImportWallet.new.(import_params, current_user)
+    in Success(wallet)
+      redirect_to me_users_path, notice: 'Wallet was successfully imported.'
+    else
+      flash.now[:alert] = 'Check your data and try again.'
+
+      render :import
+    end
   end
 end

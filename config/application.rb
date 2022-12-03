@@ -31,11 +31,18 @@ module BitcoinWalletWeb
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    config.eager_load_paths << Rails.root.join('app/transactions/*/**')
+    config.eager_load_paths << Rails.root.join('app/*')
 
-    config.eager_load_paths << Rails.root.join('app/forms/*/**')
+    Dir["#{Rails.root}/lib/*/*.rb"].each do |file|
+      require file.split('/')[-2..].join('/')
+    end
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # remove field_with_errors in views
+    ActionView::Base.field_error_proc = proc do |html_tag, _instance|
+      html_tag.html_safe
+    end
   end
 end

@@ -20,7 +20,7 @@ html
         ul
           - if current_user
             li
-              = button "sign out", auth_sign_out_path, method: :delete
+              = button_to "sign out", auth_sign_out_path, method: :delete, role: 'button'
           - else
             li
               = link_to "sign up", auth_sign_up_path, role: 'button'

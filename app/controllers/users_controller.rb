@@ -9,14 +9,13 @@ class UsersController < ApplicationController
 
   def create
     create_params = params.require(:user).permit(:login, :token)
-
     case Users::CreateUser.new.(create_params)
     in Success(user)
       cookies.permanent.encrypted[:_user] =
         { login: create_params[:login], token: create_params[:token] }.to_json
 
       redirect_to me_users_path, notice: 'User was successfully created.'
-    in Failure(user_from: user_form, errors: errors)
+    in Failure(user_form: user_form, errors: errors)
       @user_form = user_form
       @errors = errors
 

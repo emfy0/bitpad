@@ -16,4 +16,8 @@ Rails.application.routes.draw do
     delete :sign_out, to: '/sessions#destroy'
     post :create, to: '/sessions#create', as: :create_session
   end
+
+  namespace :exchange_rates do
+    get :fetch
+  end
 end
