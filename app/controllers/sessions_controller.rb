@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :redirect_authenticated_user!, only: %i[new create]
+
   def new
     @user_form ||= Users::SignInForm.new
 
@@ -21,7 +23,7 @@ class SessionsController < ApplicationController
 
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(:flash, partial: 'shared/flash')
+          render turbo_stream: set_flash
         end
 
         format.html do

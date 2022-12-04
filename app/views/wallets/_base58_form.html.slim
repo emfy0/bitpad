@@ -1,0 +1,30 @@
+= form_with model: @wallet_form, scope: :wallet, url: wallets_import_path, id: :wallet_form do |f|
+
+  - if @errors&.key?(:user_id)
+    div style="margin-bottom: 1rem;"
+      mark
+        small
+          | You have already imported this wallet.
+
+  - name_field_params = { placeholder: 'Wallet name', required: true }
+  - name_field_params['aria-invalid'] = 'true' if @errors&.key?(:name)
+
+  = f.label :name
+  = f.text_field :name, name_field_params
+  - if @errors&.key?(:name)
+    div style="margin-bottom: 1rem;"
+      mark
+        small
+          = @errors.full_messages_for(:name).join(', ')
+
+  - base58_field_params = { placeholder: 'Base58 import string', required: true }
+  - base58_field_params['aria-invalid'] = 'true' if @errors&.key?(:base58)
+  = f.label :base58
+  = f.text_field :base58, base58_field_params
+  - if @errors&.key?(:base58)
+    div style="margin-bottom: 1rem;"
+      mark
+        small
+          = @errors.full_messages_for(:base58).join(', ')
+          
+  = f.submit 'Import', class: 'contrast'

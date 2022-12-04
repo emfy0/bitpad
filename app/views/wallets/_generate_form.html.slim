@@ -1,0 +1,13 @@
+= form_with model: @wallet_form, scope: :wallet, url: wallets_generate_path, id: :wallet_form do |f|
+  - name_field_params = { placeholder: 'Wallet name', required: true }
+  - name_field_params['aria-invalid'] = 'true' if @errors&.key?(:name)
+
+  = f.label :name
+  = f.text_field :name, name_field_params
+  - if @errors&.key?(:name)
+    div style="margin-bottom: 1rem;"
+      mark
+        small
+          = @errors.full_messages_for(:name).join(', ')
+          
+  = f.submit 'Generate', class: 'contrast'

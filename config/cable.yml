@@ -1,7 +1,7 @@
 default: &default
   adapter: redis
   url: redis://redis:6379/0
-  channel_prefix: instatalk
+  channel_prefix: bitpad
 
 development:
   <<: *default

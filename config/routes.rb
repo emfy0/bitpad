@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
   root 'users#new'
 
   resources :users, only: %i[create] do
@@ -17,7 +14,19 @@ Rails.application.routes.draw do
     post :create, to: '/sessions#create', as: :create_session
   end
 
+  namespace :wallets do
+    get :new_import
+    post :import
+
+    get :new_generate
+    post :generate
+  end
+
   namespace :exchange_rates do
     get :fetch
+  end
+
+  namespace :transactions do
+    post :post
   end
 end

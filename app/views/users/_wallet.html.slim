@@ -1,0 +1,18 @@
+div id==dom_id(wallet)
+  details data-wallets-target="wallet" data-amount==wallet.balance
+    summary style="text-align: center;" =wallet.name
+    .grid style="justify-items: center;"
+      hgroup
+        h5 class="standart_color" ="#{wallet.balance} BTC"
+        h6 class="rate" ~ #{wallet.usd_balance.round(2)} USD
+      small style="margin-top: 1rem; margin-bottom: 1rem;"
+        strong =wallet.address
+      div style="margin-top: 1rem;"
+        a(
+          data-action="transaction-modal#open"
+          data-turbo="false"
+          role="button"
+          href="#"
+          class="inlined secondary"
+          data-transaction-bytes==wallet.next_transaction_bytes_count
+          ) Make a pay

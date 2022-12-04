@@ -32,4 +32,15 @@ class ApplicationController < ActionController::Base
     flash[:alert] = 'You need to login to access this page.'
     redirect_to auth_sign_in_path
   end
+
+  def redirect_authenticated_user!
+    return unless current_user
+
+    flash[:alert] = 'You are already logged in.'
+    redirect_to me_users_path
+  end
+
+  def set_flash
+    turbo_stream.replace(:flash, partial: 'shared/flash')
+  end
 end

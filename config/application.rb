@@ -14,6 +14,8 @@ require 'action_view/railtie'
 require 'action_cable/engine'
 # require "rails/test_unit/railtie"
 
+require 'bitcoin'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -32,6 +34,8 @@ module BitcoinWalletWeb
     #
     # config.time_zone = "Central Time (US & Canada)"
     config.eager_load_paths << Rails.root.join('app/*')
+
+    Bitcoin.network = :testnet3
 
     Dir["#{Rails.root}/lib/*/*.rb"].each do |file|
       require file.split('/')[-2..].join('/')

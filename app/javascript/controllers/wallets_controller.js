@@ -16,7 +16,7 @@ export default class extends Controller {
       .then(data => {
         this.walletTargets.forEach((wallet) => {
           wallet.getElementsByClassName('rate')[0].innerText =
-            `~ ${data['USD'] * wallet.dataset.amount} USD`;
+            `~ ${(data['USD'] * wallet.dataset.amount).toFixed(2)} USD`;
         });
       });
   }

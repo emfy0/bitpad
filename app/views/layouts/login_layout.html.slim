@@ -3,7 +3,7 @@ html
   head
     title Bitpad
     meta(name="viewport" content="width=device-width,initial-scale=1")
-    link rel="icon" href==image_path('favicon.svg', skip_pipeline: true) sizes="any" type="image/svg+xml"
+    =favicon_link_tag image_path('favicon.png', skip_pipeline: true)
 
     = csrf_meta_tags
     = csp_meta_tag

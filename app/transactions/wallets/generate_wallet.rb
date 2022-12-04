@@ -1,6 +1,6 @@
 require 'dry/transaction'
 
-class Wallets::ImportWallet
+class Wallets::GenerateWallet
   include Dry::Transaction
 
   step :validate
@@ -9,7 +9,7 @@ class Wallets::ImportWallet
   private
 
   def validate(params:, current_user:, token:)
-    wallet_form = Wallets::ImportForm.new(params)
+    wallet_form = Wallets::GenerateForm.new(params)
 
     if wallet_form.valid?
       Success(attrs: wallet_form.attributes, wallet_form:, current_user:, token:)
@@ -19,7 +19,7 @@ class Wallets::ImportWallet
   end
 
   def create_wallet(attrs:, current_user:, wallet_form:, token:)
-    key = Bitcoin::Key.from_base58(attrs[:base58])
+    key = Bitcoin::Key.generate
 
     case Wallets::CreateWallet.new.(current_user:, token:, key:, name: attrs[:name])
     in Success(wallet)

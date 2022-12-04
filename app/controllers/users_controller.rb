@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[me]
+  before_action :redirect_authenticated_user!, only: %i[new create]
 
   def new
     @user_from ||= Users::CreateForm.new
@@ -24,8 +25,7 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           render(
-            turbo_stream: turbo_stream.replace(:flash, partial: 'shared/flash') +
-              turbo_stream.replace(:sign_up_form, partial: 'users/sign_up_form')
+            turbo_stream: [set_flash, turbo_stream.replace(:sign_up_form, partial: 'users/sign_up_form')]
           )
         end
         format.html do
@@ -37,5 +37,6 @@ class UsersController < ApplicationController
 
   def me
     @user = current_user
+    @wallets = @user.wallets
   end
 end

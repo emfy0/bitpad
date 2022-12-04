@@ -1,5 +1,5 @@
 div(
-  data-controller="add-wallet-modal wallets"
+  data-controller="add-wallet-modal wallets transaction-modal"
   data-wallets-url-value==exchange_rates_fetch_path
 )
 
@@ -14,23 +14,10 @@ div(
         class="inlined outline"
       ) +
 
-  div style="margin-top: 2rem;"
-    details data-wallets-target="wallet" data-amount="1"
-      summary style="text-align: center;" Wallet 1
-      .grid style="justify-items: center;"
-        hgroup
-          h5 class="standart_color" 0.00000000 BTC
-          h6 class="rate" ~ 0 USD
-        small style="margin-top: 1rem; margin-bottom: 1rem;"
-          strong tb1q4280xax2lt0u5a5s9hd4easuvzalm8v9ege9ge
-        div style="margin-top: 1rem;"
-          a(
-            data-action="add-wallet-modal#open"
-            data-turbo="false"
-            role="button"
-            href="#"
-            class="inlined secondary"
-            ) Make a pay
-
+  =turbo_stream_from current_user, :wallets
+  div style="margin-top: 2rem;" id==dom_id(current_user, :wallets)
+    - @wallets.each do |wallet|
+      = render 'wallet', wallet: wallet
 
   =render 'add_wallet_modal'
+  =render 'transaction_modal', transaction_form: Transactions::PostForm.new

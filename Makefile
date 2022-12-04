@@ -37,12 +37,12 @@ bash:
 a:
 	make attach
 attach:
-	docker attach bitcoin_wallet_web_app_1
+	docker attach bitcoin_wallet_web-app-1
 
 r:
 	make restart
 restart:
-	docker restart bitcoin_wallet_web_app_1
+	docker restart bitcoin_wallet_web-app-1
 
 s:
 	make start

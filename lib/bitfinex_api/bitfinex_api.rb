@@ -5,7 +5,7 @@ class BitfinexApi
 
   class UnknownCurrency < StandardError; end
 
-  def self. exchange_rate_of(cur, to_cur)
+  def self.exchange_rate_of(cur, to_cur)
     res = Net::HTTP.post(
       BITFINEX_EXCHANGE_RATE_URL,
       { ccy1: cur, ccy2: to_cur }.to_json,

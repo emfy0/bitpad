@@ -1,5 +1,4 @@
 dialog(
-  id="modal-example"
   data-add-wallet-modal-target="modal"
   open="false"
 )
@@ -13,17 +12,15 @@ dialog(
         data-action="add-wallet-modal#close"
         data-turbo="false"
       )
-    a(href="#confirm"
-      role="button"
-      data-target="modal-example"
-      onclick="toggleModal(event)"
-      style="width: 100%; margin-bottom: 10px;"
-      class="contrast outline"
-    ) Import wallet
-    a(href="#confirm"
-      role="button"
-      data-target="modal-example"
-      onclick="toggleModal(event)"
-      style="width: 100%;"
-      class="contrast outline"
-    ) Generate wallet
+    =link_to 'Import wallet',
+             wallets_new_import_path,
+             role: 'button',
+             class: 'contrast outline',
+             'data-action' => 'add-wallet-modal#close',
+             style: 'width: 100%; margin-bottom: 10px;'
+    =link_to 'Generate wallet',
+             wallets_new_generate_path,
+             role: 'button',
+             class: 'contrast outline',
+             'data-action' => 'add-wallet-modal#close',
+             style: 'width: 100%'

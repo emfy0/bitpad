@@ -1,10 +1,10 @@
 require 'bitcoin'
 
 class Wallets::ImportForm < ApplicationForm
-  attr_accessor :base58
+  attr_accessor :base58, :name
 
-  validate :base58_format
   validates :base58, presence: true
+  validate :base58_format
 
   validates :name, presence: true, length: { minimum: 3, maximum: 20 }
 
@@ -13,7 +13,7 @@ class Wallets::ImportForm < ApplicationForm
     # rubocop:disable Style/RescueStandardError
   rescue => e
     # rubocop:enable Style/RescueStandardError
-    errors.add(:base58, :invalid, e.message)
+    errors.add(:base58, e.message)
   end
 
   def attributes

@@ -13,5 +13,8 @@ application.register("flash", FlashController)
 import SignInController from "./sign_in_controller"
 application.register("sign-in", SignInController)
 
+import TransactionModalController from "./transaction_modal_controller"
+application.register("transaction-modal", TransactionModalController)
+
 import WalletsController from "./wallets_controller"
 application.register("wallets", WalletsController)

@@ -1,8 +1,19 @@
-require 'dry/transaction'
-
 class Wallets::CreateWallet
-  include Dry::Transaction
+  def call(current_user:, token:, key:, name:)
+    encryptor = ActiveSupport::MessageEncryptor.new(token)
+    encrypted_data = encryptor.encrypt_and_sign(key.priv)
 
-  private
+    wallet =
+      Wallet.create(user: current_user, encrypted_private_key: encrypted_data, name:, address: key.addr)
 
+    if wallet.valid?
+      Success(
+        wallet
+      )
+    else
+      Failure(
+        errors: wallet.errors
+      )
+    end
+  end
 end

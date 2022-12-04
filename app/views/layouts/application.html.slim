@@ -3,7 +3,7 @@ html
   head
     title Bitpad
     meta(name="viewport" content="width=device-width,initial-scale=1")
-    link rel="icon" href==image_path('favicon.svg', skip_pipeline: true) sizes="any" type="image/svg+xml"
+    =favicon_link_tag image_path('favicon.png', skip_pipeline: true)
 
     = csrf_meta_tags
     = csp_meta_tag
@@ -20,12 +20,12 @@ html
         ul
           - if current_user
             li
-              = button_to "sign out", auth_sign_out_path, method: :delete, role: 'button'
+              = button_to "Sign out", auth_sign_out_path, method: :delete, role: 'button'
           - else
             li
-              = link_to "sign up", auth_sign_up_path, role: 'button'
+              = link_to "Sign up", auth_sign_up_path, role: 'button'
             li
-              = link_to "sign in", auth_sign_in_path, role: 'button'
+              = link_to "Sign in", auth_sign_in_path, role: 'button'
 
     div.container
       = render 'shared/flash'

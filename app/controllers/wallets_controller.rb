@@ -17,24 +17,53 @@ class WalletsController < ApplicationController
     end
   end
 
-  def show
-    @wallet = current_user.wallets.find_by(hashed_id: params[:id])
-  end
-
   def new_import
     @wallet_form ||= Wallets::ImportForm.new
   end
 
   def import
-    import_params = params.require(:wallet).permit(:base58)
+    import_params = params.require(:wallet).permit(:base58, :name)
 
-    case Wallets::ImportWallet.new.(import_params, current_user)
+    case Wallets::ImportWallet.new.(params: import_params, current_user:, token:)
     in Success(wallet)
       redirect_to me_users_path, notice: 'Wallet was successfully imported.'
-    else
+    in Failure(wallet_form: wallet_form, errors: errors)
+      @wallet_form = wallet_form
+      @errors = errors
+
       flash.now[:alert] = 'Check your data and try again.'
 
-      render :import
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [set_flash, turbo_stream.replace(:wallet_form, partial: 'wallets/base58_form')]
+        end
+        format.html { render :new_import }
+      end
+    end
+  end
+
+  def new_generate
+    @wallet_form ||= Wallets::GenerateForm.new
+  end
+
+  def generate
+    greate_params = params.require(:wallet).permit(:name)
+
+    case Wallets::GenerateWallet.new.(params: greate_params, current_user:, token:)
+    in Success(wallet)
+      redirect_to me_users_path, notice: 'Wallet was successfully generated.'
+    in Failure(wallet_form: wallet_form, errors: errors)
+      @wallet_form = wallet_form
+      @errors = errors
+
+      flash.now[:alert] = 'Check your data and try again.'
+
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [set_flash, turbo_stream.replace(:wallet_form, partial: 'wallets/generate_form')]
+        end
+        format.html { render :new_generate }
+      end
     end
   end
 end

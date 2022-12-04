@@ -1,0 +1,51 @@
+dialog(
+  data-transaction-modal-target="modal"
+  open="false"
+)
+  article
+    header
+      strong Make transaction
+      a(
+        href="#close"
+        aria-label="Close"
+        class="close"
+        data-action="transaction-modal#close"
+        data-turbo="false"
+      )
+    = form_with model: transaction_form, scope: :transaction, url: transactions_post_path, id: :transaction_form do |f|
+      - recipient_address_field_params = { placeholder: 'Recipient address', required: true }
+      - recipient_address_field_params['aria-invalid'] = 'true' if @errors&.key?(:recipient_address)
+
+      = f.label :recipient_address
+      = f.text_field :recipient_address, recipient_address_field_params
+      - if @errors&.key?(:recipient_address)
+        div style="margin-bottom: 1rem;"
+          mark
+            small
+              = @errors.full_messages_for(:recipient_address).join(', ')
+
+
+      - volume_field_params = { placeholder: 'Transaction amount', required: true, min: 0 }
+      - volume_field_params['aria-invalid'] = 'true' if @errors&.key?(:recipient_address)
+      = f.label :volume
+      = f.number_field :volume, volume_field_params
+      - if @errors&.key?(:volume)
+        div style="margin-bottom: 1rem;"
+          mark
+            small
+              = @errors.full_messages_for(:volume).join(', ')
+
+
+      = f.label :fee_rate, class: 'inlined'
+      b(
+        style="margin-left: 0.5rem;"
+        data-transaction-modal-target="feeShow"
+      )
+
+      = f.range_field :fee_rate,
+                      in: 0.5..2,
+                      step: 0.5,
+                      'data-action' => 'input->transaction-modal#updateChosenFee change->transaction-modal#updateChosenFee',
+                      'data-transaction-modal-target' => 'feeRange'
+
+      = f.submit 'Pay', class: 'contrast'
