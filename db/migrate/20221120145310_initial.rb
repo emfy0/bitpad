@@ -12,6 +12,8 @@ class Initial < ActiveRecord::Migration[7.0]
       t.string :hashed_id, null: false, index: { unique: true }
       t.string :address, null: false
       t.string :encrypted_private_key, null: false
+      t.boolean :oppened, null: false, default: false
+      t.boolean :tx_oppened, null: false, default: false
       t.references :user, null: false, foreign_key: true, index: true, on_delete: :cascade
 
       t.timestamps

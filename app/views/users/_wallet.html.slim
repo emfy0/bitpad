@@ -1,11 +1,16 @@
 div id==dom_id(wallet)
-  details data-wallets-target="wallet" data-amount==wallet.balance
-    summary style="text-align: center;" =wallet.name
+  - details_params = wallet.oppened? ? { 'open' => true } : { }
+  details *details_params
+    summary(
+      data-wallet-hashed-id==wallet.hashed_id
+      data-action="click->wallets#openWallet"
+      style="text-align: center;"
+    ) =wallet.name
     .grid style="justify-items: center;"
-      hgroup
-        h5 class="standart_color" ="#{wallet.balance} BTC"
+      hgroup style="margin-top: 2.5rem;"
+        h5 class="standart_color" ="#{format('%.8f', wallet.balance)} BTC"
         h6 class="rate" ~ #{wallet.usd_balance.round(2)} USD
-      small style="margin-top: 1rem; margin-bottom: 1rem;"
+      small style="margin-top: 3.5rem; margin-bottom: 1rem;"
         strong =wallet.address
       div style="margin-top: 1rem;"
         a(
@@ -13,6 +18,31 @@ div id==dom_id(wallet)
           data-turbo="false"
           role="button"
           href="#"
-          class="inlined secondary"
+          class="secondary"
           data-transaction-bytes==wallet.next_transaction_bytes_count
-          ) Make a pay
+          data-wallet-hashed-id==wallet.hashed_id
+        ) Make a pay
+        =button_to 'X', wallets_destroy_path,
+                        params: { hashed_id: wallet.hashed_id },
+                        class: 'contrast outline',
+                        method: :delete,
+                        data: { turbo_confirm: 'Are you sure?' },
+                        style: 'margin-top: 1rem;'
+
+
+    div
+      - details_params = wallet.tx_oppened? ? { 'open' => true } : { }
+      details *details_params
+        summary(
+          style="text-align: center;"
+          data-wallet-hashed-id==wallet.hashed_id
+          data-action="click->wallets#openTx"
+        ) Last wallet transactions
+        table role="grid"
+          thead
+            tr
+              th scope="col" Transaction id
+          - wallet.last_transaction_hex_id(amount: 4).each do |transaction|
+            tr
+              td
+                = render 'users/transaction', transaction: transaction

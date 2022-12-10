@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users, only: %i[create] do
     collection do
       get :me
+      get :update_wallets
     end
   end
 
@@ -18,12 +19,12 @@ Rails.application.routes.draw do
     get :new_import
     post :import
 
+    post :update_open_state
+
+    delete :destroy
+
     get :new_generate
     post :generate
-  end
-
-  namespace :exchange_rates do
-    get :fetch
   end
 
   namespace :transactions do

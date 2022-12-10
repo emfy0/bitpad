@@ -25,10 +25,6 @@ class SessionsController < ApplicationController
         format.turbo_stream do
           render turbo_stream: set_flash
         end
-
-        format.html do
-          render :new, layout: 'login_layout'
-        end
       end
     end
   end

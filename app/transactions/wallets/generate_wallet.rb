@@ -22,8 +22,8 @@ class Wallets::GenerateWallet
     key = Bitcoin::Key.generate
 
     case Wallets::CreateWallet.new.(current_user:, token:, key:, name: attrs[:name])
-    in Success(wallet)
-      Success(wallet)
+    in Success(wallet:, base58:)
+      Success(wallet:, base58:)
     in Failure(errors: errors)
       Failure(wallet_form:, errors:)
     end

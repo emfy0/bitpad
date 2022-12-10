@@ -1,6 +1,7 @@
 div(
   data-controller="add-wallet-modal wallets transaction-modal"
-  data-wallets-url-value==exchange_rates_fetch_path
+  data-wallets-update-wallets-url-value==update_wallets_users_path
+  data-wallets-update-open-state-url-value==wallets_update_open_state_path
 )
 
   div.grid
@@ -20,4 +21,4 @@ div(
       = render 'wallet', wallet: wallet
 
   =render 'add_wallet_modal'
-  =render 'transaction_modal', transaction_form: Transactions::PostForm.new
+  =render 'transaction_modal', transaction_form: Transactions::PostForm.new, errors: nil, oppened: false

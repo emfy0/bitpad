@@ -1,6 +1,6 @@
-dialog(
+dialog#transaction_form(
   data-transaction-modal-target="modal"
-  open="false"
+  open== oppened
 )
   article
     header
@@ -13,27 +13,29 @@ dialog(
         data-turbo="false"
       )
     = form_with model: transaction_form, scope: :transaction, url: transactions_post_path, id: :transaction_form do |f|
+      = f.hidden_field :hashed_id, 'data-transaction-modal-target' => 'hashedId'
+
       - recipient_address_field_params = { placeholder: 'Recipient address', required: true }
-      - recipient_address_field_params['aria-invalid'] = 'true' if @errors&.key?(:recipient_address)
+      - recipient_address_field_params['aria-invalid'] = 'true' if errors&.key?(:recipient_address)
 
       = f.label :recipient_address
       = f.text_field :recipient_address, recipient_address_field_params
-      - if @errors&.key?(:recipient_address)
+      - if errors&.key?(:recipient_address)
         div style="margin-bottom: 1rem;"
           mark
             small
-              = @errors.full_messages_for(:recipient_address).join(', ')
+              = errors.full_messages_for(:recipient_address).join(', ')
 
 
-      - volume_field_params = { placeholder: 'Transaction amount', required: true, min: 0 }
-      - volume_field_params['aria-invalid'] = 'true' if @errors&.key?(:recipient_address)
+      - volume_field_params = { placeholder: 'Transaction amount in satoshi', required: true, min: 0 }
+      - volume_field_params['aria-invalid'] = 'true' if errors&.key?(:volume)
       = f.label :volume
       = f.number_field :volume, volume_field_params
-      - if @errors&.key?(:volume)
+      - if errors&.key?(:volume)
         div style="margin-bottom: 1rem;"
           mark
             small
-              = @errors.full_messages_for(:volume).join(', ')
+              = errors.full_messages_for(:volume).join(', ')
 
 
       = f.label :fee_rate, class: 'inlined'
@@ -45,6 +47,7 @@ dialog(
       = f.range_field :fee_rate,
                       in: 0.5..2,
                       step: 0.5,
+                      value: 1,
                       'data-action' => 'input->transaction-modal#updateChosenFee change->transaction-modal#updateChosenFee',
                       'data-transaction-modal-target' => 'feeRange'
 

@@ -28,9 +28,6 @@ class UsersController < ApplicationController
             turbo_stream: [set_flash, turbo_stream.replace(:sign_up_form, partial: 'users/sign_up_form')]
           )
         end
-        format.html do
-          render :new, layout: 'login_layout'
-        end
       end
     end
   end
@@ -38,5 +35,9 @@ class UsersController < ApplicationController
   def me
     @user = current_user
     @wallets = @user.wallets
+  end
+
+  def update_wallets
+    current_user.wallets.each(&:turbo_update)
   end
 end

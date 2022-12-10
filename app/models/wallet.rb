@@ -14,10 +14,6 @@ class Wallet < ApplicationRecord
     )
   end
 
-  after_update_commit do
-    broadcast_update_to [user, :wallets], target: self, partial: 'users/wallet', locals: { wallet: self }
-  end
-
   after_destroy_commit do
     broadcast_remove_to [user, :wallets], target: self
   end
@@ -34,12 +30,20 @@ class Wallet < ApplicationRecord
     @usd_balance ||= balance * BitfinexApi.exchange_rate_of('BTC', 'USD')
   end
 
-  def utxo_id
+  def utxo_ids
     @utxo_id ||= BlockstreamApi.utxo_ids_by_addr(address)
   end
 
+  def utxo_list
+    @utxo_list ||= utxo_ids.map { |tx_id| BlockstreamApi.transaction_by_id tx_id }
+  end
+
   def next_transaction_bytes_count
-    utxo_id.count * 148 + 34 * 2 + 10
+    utxo_ids.count * 148 + 34 * 2 + 10
+  end
+
+  def last_transaction_hex_id(amount: 1)
+    @last_transaction ||= BlockstreamApi.addr_transactions_hashed_ids(address).first(amount)
   end
 
   def turbo_update

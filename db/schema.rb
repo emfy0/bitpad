@@ -26,6 +26,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_20_145310) do
     t.string "hashed_id", null: false
     t.string "address", null: false
     t.string "encrypted_private_key", null: false
+    t.boolean "oppened", default: false, null: false
+    t.boolean "tx_oppened", default: false, null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

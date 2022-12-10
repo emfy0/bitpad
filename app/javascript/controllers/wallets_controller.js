@@ -2,26 +2,39 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="wallets"
 export default class extends Controller {
-  static targets = [ "wallet" ];
-
-  static values = { url: String };
+  static values = { updateWalletsUrl: String, updateOpenStateUrl: String };
 
   connect() {
-    this.interval = setInterval(() => this.fetchRates(), 15000);
+    this.updateWalletsInterval = setInterval(() => this.updateWallets(), 15000);
   }
 
-  fetchRates() {
-    fetch(this.urlValue)
-      .then(response => response.json())
-      .then(data => {
-        this.walletTargets.forEach((wallet) => {
-          wallet.getElementsByClassName('rate')[0].innerText =
-            `~ ${(data['USD'] * wallet.dataset.amount).toFixed(2)} USD`;
-        });
-      });
+  updateWallets() {
+    fetch(this.updateWalletsUrlValue);
+  }
+
+  openTx(event) {
+    fetch(this.updateOpenStateUrlValue, {
+      method: "post",
+      credentials: 'include',
+      body: new URLSearchParams({
+        'hashed_id': event.target.dataset.walletHashedId,
+        'tx_oppened': !event.target.closest("details").hasAttribute("open")
+      })
+    });
+  }
+
+  openWallet(event) {
+    fetch(this.updateOpenStateUrlValue, {
+      method: "post",
+      credentials: 'include',
+      body: new URLSearchParams({
+        'hashed_id': event.target.dataset.walletHashedId,
+        'oppened': !event.target.closest("details").hasAttribute("open")
+      })
+    });
   }
 
   disconnect() {
-    clearInterval(this.interval);
+    clearInterval(this.updateWalletsInterval);
   }
 }

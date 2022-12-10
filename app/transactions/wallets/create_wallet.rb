@@ -8,7 +8,8 @@ class Wallets::CreateWallet
 
     if wallet.valid?
       Success(
-        wallet
+        wallet:,
+        base58: key.to_base58
       )
     else
       Failure(
