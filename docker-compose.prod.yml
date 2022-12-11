@@ -3,7 +3,6 @@ version: '3.9'
 services:
   app:
     image: bitpad
-    build: .
     command: make start_production
     restart: unless-stopped
     environment:

@@ -57,6 +57,7 @@ push_production:
 
 deploy:
 	git pull
+	docker build -t bitpad .
 	docker stack deploy -c docker-compose.prod.yml bitpad_prod
 
 start_production:
