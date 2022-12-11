@@ -12,7 +12,6 @@ c:
 console:
 	docker-compose run --rm app bundle exec rails c
 
-
 ac:
 	make assets_percompile
 assets_percompile:
@@ -48,3 +47,9 @@ s:
 	make start
 start:
 	docker-compose up -d
+
+start_production:
+	bundle exec rails assets:precompile
+	bundle exec rails db:create || true
+	bundle exec rails db:migrate
+	bundle exec rails s -p 3000 -b 0.0.0.0

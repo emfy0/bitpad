@@ -38,6 +38,6 @@ class UsersController < ApplicationController
   end
 
   def update_wallets
-    current_user.wallets.each(&:turbo_update)
+    current_user.wallets.each { |w| w.reload.turbo_update }
   end
 end

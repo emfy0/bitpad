@@ -31,4 +31,3 @@ COPY Gemfile.lock ./
 
 RUN bundle install
 
-EXPOSE 3000
