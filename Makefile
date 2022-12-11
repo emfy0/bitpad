@@ -48,6 +48,17 @@ s:
 start:
 	docker-compose up -d
 
+build_production:
+	docker build -t bitpad:latest .
+
+push_production:
+	docker tag bitpad:latest 0emfy/bitpad:latest
+	docker push 0emfy/bitpad:latest
+
+deploy:
+	git pull
+	docker stack deploy -c docker-compose.prod.yml bitpad_prod
+
 start_production:
 	bundle exec rails assets:precompile
 	bundle exec rails db:create || true

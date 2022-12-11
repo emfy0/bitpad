@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    image: 0emfy/bitpad:latest
     command: bundle exec rails s -p 3000 -b 0.0.0.0
     ports:
       - "3000:3000"
