@@ -35,6 +35,7 @@ for available commands see `Makefile`
 ## Setup
 ```bash
 $ git clone
+$ cd bitpad
 $ make deploy
 ```
 
