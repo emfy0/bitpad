@@ -1,6 +1,4 @@
-# About
-
-## [Bitpad](https://bitpad.ru)
+# [Bitpad](https://bitpad.ru)
 
 Bitpad is non castodial, service for managing bitcoin wallet
 
