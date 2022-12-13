@@ -1,5 +1,4 @@
 # About
----
 
 ## [Bitpad](https://bitpad.ru)
 
@@ -13,13 +12,11 @@ Once user logged in, users token is stored in encrypted cookie, so he doesn't ne
 # Local development
 
 ## Requirements
----
 
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
 ## Setup
----
 ```bash
 $ git clone
 $ cd bitpad
@@ -33,13 +30,11 @@ for available commands see `Makefile`
 # Production deployment
 
 ## Requirements
----
 
 - [Docker](https://www.docker.com/)
 - [Docker Swarm](https://docs.docker.com/engine/swarm/)
 
 ## Setup
----
 ```bash
 $ git clone
 $ make deploy
