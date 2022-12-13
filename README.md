@@ -3,9 +3,9 @@
 Bitpad is non castodial, service for managing bitcoin wallet
 
 Wallet's private keys, are stored in database with encryption.
-Users token is a key to decrypt it.
-Service dont store tokens, so it hasn't access to users private keys.
-Once user logged in, users token is stored in encrypted cookie, so he doesn't need to enter it again.
+User's token is a key to decrypt it.
+Service doesn't store tokens, so it hasn't access to user's private keys.
+Once user logged in, his token is stored in encrypted cookie, so he doesn't need to enter it again.
 
 # Local development
 
