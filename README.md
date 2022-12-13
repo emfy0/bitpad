@@ -1,24 +1,47 @@
-# README
+# About
+---
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## [Bitpad](https://bitpad.ru)
 
-Things you may want to cover:
+Bitpad is non castodial, service for managing bitcoin wallet
 
-* Ruby version
+Wallet's private keys, are stored in database with encryption.
+Users token is a key to decrypt it.
+Service dont store tokens, so it hasn't access to users private keys.
+Once user logged in, users token is stored in encrypted cookie, so he doesn't need to enter it again.
 
-* System dependencies
+# Local development
 
-* Configuration
+## Requirements
+---
 
-* Database creation
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
-* Database initialization
+## Setup
+---
+```bash
+$ git clone
+$ cd bitpad
+$ docker-compose up -d
+```
 
-* How to run the test suite
+go to [localhost:3000](http://localhost:3000)
 
-* Services (job queues, cache servers, search engines, etc.)
+for available commands see `Makefile`
 
-* Deployment instructions
+# Production deployment
 
-* ...
+## Requirements
+---
+
+- [Docker](https://www.docker.com/)
+- [Docker Swarm](https://docs.docker.com/engine/swarm/)
+
+## Setup
+---
+```bash
+$ git clone
+$ make deploy
+```
+
