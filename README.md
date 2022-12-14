@@ -1,6 +1,6 @@
 # [Bitpad](https://bitpad.ru)
 
-Bitpad is non castodial, service for managing bitcoin wallet
+Bitpad is non castodial, service for managing bitcoin wallets
 
 Wallet's private keys, are stored in database with encryption.
 User's token is a key to decrypt it.
