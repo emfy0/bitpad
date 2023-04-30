@@ -16,7 +16,9 @@
       name: {{ .Values.postgress.secrets.password.name }}
       key: {{ .Values.postgress.secrets.password.key }}
 - name: RAILS_APP
-  value: "production"
+  value: production
+- name: RAILS_ENV
+  value: production
 - name: REDIS_URL
   value: {{ .Values.appName }}-redis
 - name: REDIS_PORT
