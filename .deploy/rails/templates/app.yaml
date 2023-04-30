@@ -11,8 +11,8 @@ spec:
     app: {{ .Values.appName }}
     tier: rails
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ReplicationController
 metadata:
   name: {{ .Values.appName }}-rails
 spec:
