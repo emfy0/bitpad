@@ -1,4 +1,4 @@
-{{- if .Values.postgress.enabled }}
+{{- if .Values.postgres.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -33,14 +33,14 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  {{- if .Values.postgress.storage.size.limited }}
+  {{- if .Values.postgres.storage.size.limited }}
   resources:
     requests:
-      storage: {{ .Values.postgress.storage.size.value }}
+      storage: {{ .Values.postgres.storage.size.value }}
   {{- end }}
 ---
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1beta2
+kind: Deployment
 metadata:
   name: {{ .Values.appName }}-postgres
   labels:
@@ -48,8 +48,9 @@ metadata:
 spec:
   replicas: 1
   selector:
-    app: {{ .Values.appName }}
-    tier: postgres
+    matchLabels:
+      app: {{ .Values.appName }}
+      tier: postgres
   template:
     metadata:
       name: {{ .Values.appName }}-postgres
@@ -63,20 +64,20 @@ spec:
           claimName: {{ .Values.appName }}-postgres-pvc
       containers:
       - name: {{ .Values.appName }}-postgres
-        image: {{ .Values.postgress.image }}
+        image: {{ .Values.postgres.image }}
         env:
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
-              name: "{{ .Values.postgress.secrets.user.name }}"
-              key: "{{ .Values.postgress.secrets.user.key }}"
+              name: "{{ .Values.postgres.secrets.user.name }}"
+              key: "{{ .Values.postgres.secrets.user.key }}"
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: "{{ .Values.postgress.secrets.password.name }}"
-              key: "{{ .Values.postgress.secrets.password.key }}"
+              name: "{{ .Values.postgres.secrets.password.name }}"
+              key: "{{ .Values.postgres.secrets.password.key }}"
         - name: POSTGRES_DB
-          value: "{{ .Values.postgress.dbName }}"
+          value: "{{ .Values.postgres.dbName }}"
         - name: PGDATA
           value: "/var/lib/postgresql/data"
         ports:

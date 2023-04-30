@@ -1,6 +1,6 @@
 {{- define "app.env" -}}
 - name: DATABASE_NAME
-  value: "{{ .Values.postgress.dbName }}"
+  value: "{{ .Values.postgres.dbName }}"
 - name: DATABASE_URL
   value: "{{ .Values.appName }}-postgres"
 - name: DATABASE_PORT
@@ -8,13 +8,13 @@
 - name: DATABASE_USER
   valueFrom:
     secretKeyRef:
-      name: "{{ .Values.postgress.secrets.user.name }}"
-      key: "{{ .Values.postgress.secrets.user.key }}"
+      name: "{{ .Values.postgres.secrets.user.name }}"
+      key: "{{ .Values.postgres.secrets.user.key }}"
 - name: DATABASE_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: "{{ .Values.postgress.secrets.password.name }}"
-      key: "{{ .Values.postgress.secrets.password.key }}"
+      name: "{{ .Values.postgres.secrets.password.name }}"
+      key: "{{ .Values.postgres.secrets.password.key }}"
 - name: RAILS_APP
   value: "production"
 - name: RAILS_ENV

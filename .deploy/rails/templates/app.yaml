@@ -11,15 +11,17 @@ spec:
     app: {{ .Values.appName }}
     tier: rails
 ---
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1beta2
+kind: Deployment
 metadata:
   name: {{ .Values.appName }}-rails
+  lables: {{ .Values.appName }}
 spec:
   replicas: 1
   selector:
-    app: {{ .Values.appName }}
-    tier: rails
+    matchLables:
+      app: {{ .Values.appName }}
+      tier: rails
   template:
     metadata:
       name: {{ .Values.appName }}-rails
@@ -30,6 +32,7 @@ spec:
       containers:
       - name: {{ .Values.appName }}-rails
         image: {{ .Values.app.image }}
+        command: {{ .Values.app.command }}
         args: {{ .Values.app.args }}
         env:
         {{- include "app.env" . | nindent 8 }}

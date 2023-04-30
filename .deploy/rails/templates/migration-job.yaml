@@ -11,6 +11,7 @@ spec:
       containers:
       - name: {{ .Values.appName }}-setup
         image: {{ .Values.app.image }}
+        command: {{ .Values.migration.command }}
         args: {{ .Values.migration.args }}
         env:
         {{- include "app.env" . | nindent 8 }}
