@@ -11,4 +11,5 @@ spec:
         backend:
           service:
             name: {{ .Values.appName }}-rails
-            port: 3000
+            port: 
+              number: 3000
