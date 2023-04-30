@@ -6,7 +6,7 @@ metadata:
     app: {{ .Values.appName }}
 spec:
   ports:
-    - port: 3000
+    - port: 80
   selector:
     app: {{ .Values.appName }}
     tier: rails
