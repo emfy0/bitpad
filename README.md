@@ -26,16 +26,3 @@ go to [localhost:3000](http://localhost:3000)
 for available commands see `Makefile`
 
 # Production deployment
-
-## Requirements
-
-- [Docker](https://www.docker.com/)
-- [Docker Swarm](https://docs.docker.com/engine/swarm/)
-
-## Setup
-```bash
-$ git clone
-$ cd bitpad
-$ make deploy
-```
-

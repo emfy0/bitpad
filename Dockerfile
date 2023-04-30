@@ -1,6 +1,6 @@
 FROM debian:stable-slim
 
-RUN apt-get update && apt-get install -y cron libpq-dev
+RUN apt-get update && apt-get install -y libpq-dev
 
 RUN apt-get update -q && \
     apt-get install -qy procps curl ca-certificates gnupg2 build-essential --no-install-recommends && apt-get clean
@@ -31,3 +31,6 @@ COPY Gemfile.lock ./
 
 RUN bundle install
 
+COPY . .
+
+RUN bundle exec rails assets:precompile

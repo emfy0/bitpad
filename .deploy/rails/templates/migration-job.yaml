@@ -1,0 +1,18 @@
+{{- if .Values.migration.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.appName }}-migration
+spec:
+  template:
+    metadata:
+      name: {{ .Values.appName }}-migration
+    spec:
+      containers:
+      - name: {{ .Values.appName }}-setup
+        image: {{ .Values.app.image }}
+        args: {{ .Values.migration.args }}
+        env:
+        {{- include "app.env" . | nindent 8 }}
+      restartPolicy: Never
+{{- end }}

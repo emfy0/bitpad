@@ -1,0 +1,87 @@
+{{- if .Values.postgress.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-postgres
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: {{ .Values.appName }}
+    tier: postgres
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ .Values.appName }}-postgres-pv
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/data/{{ .Values.appName }}"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.appName }}-postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  {{- if .Values.postgress.storage.size.limited }}
+  resources:
+    requests:
+      storage: {{ .Values.postgress.storage.size.value }}
+  {{- end }}
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: {{ .Values.appName }}-postgres
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: 1
+  selector:
+    app: {{ .Values.appName }}
+    tier: postgres
+  template:
+    metadata:
+      name: {{ .Values.appName }}-postgres
+      labels:
+        app: {{ .Values.appName }}
+        tier: postgres
+    spec:
+      volumes:
+      - name: {{ .Values.appName }}-postgres-pv
+        persistentVolumeClaim:
+          claimName: {{ .Values.appName }}-postgres-pvc
+      containers:
+      - name: {{ .Values.appName }}-postgres
+        image: {{ .Values.postgress.image }}
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgress.secrets.user.name }}
+              key: {{ .Values.postgress.secrets.user.key }}
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgress.secrets.password.name }}
+              key: {{ .Values.postgress.secrets.password.key }}
+        - name: POSTGRES_DB
+          value: {{ .Values.postgress.dbName }}
+        - name: PGDATA
+          value: /var/lib/postgresql/data
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: {{ .Values.appName }}-postgres-pv
+{{- end }}

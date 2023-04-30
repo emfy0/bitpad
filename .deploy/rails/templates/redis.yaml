@@ -1,0 +1,36 @@
+{{- if .Values.redis.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-redis
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  ports:
+    - port: 6379
+  selector:
+    app: {{ .Values.appName }}
+    tier: redis
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: {{ .Values.appName }}-redis
+spec:
+  replicas: 1
+  selector:
+    app: {{ .Values.appName }}
+    tier: redis
+  template:
+    metadata:
+      name: {{ .Values.appName }}-redis
+      labels:
+        app: {{ .Values.appName }}
+        tier: redis
+    spec:
+      containers:
+      - name: {{ .Values.appName }}-redis
+        image: {{ .Values.redis.image }}
+        ports:
+        - containerPort: 6379
+{{- end }}

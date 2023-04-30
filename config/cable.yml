@@ -1,6 +1,5 @@
 default: &default
   adapter: redis
-  url: redis://redis:6379/0
   channel_prefix: bitpad
 
 development:

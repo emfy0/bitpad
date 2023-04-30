@@ -1,0 +1,36 @@
+appName: rails-app
+
+postgress:
+  enabled: true
+  image: postgres:9.6-alpine
+  dbName: rails-kube-demo_production
+  storage:
+    size:
+      limited: true
+      value: 4Gi
+  secrets:
+    user:
+      name: db-user
+      key: username
+    password:
+      name: db-user-pass
+      key: password
+
+redis: 
+  enabled: true
+  image: redis:3.2-alpine
+
+migration:
+  enabled: true
+  args: ["rake db:create && rake db:migrate"]
+
+ingress:
+  hostname: 192.168.1.38
+
+app:
+  image: tzumby/rails-app:latest
+  args:  ["rails s -p 3000 -b 0.0.0.0"]
+  secrets:
+    secretKeyBase:
+      name: secret-key-base
+      key: secret-key-base
