@@ -2,7 +2,7 @@
 - name: DATABASE_NAME
   value: {{ .Values.postgress.dbName }}
 - name: DATABASE_URL
-  value: "postgres"
+  value: {{ .Values.appName }}-postgres
 - name: DATABASE_PORT
   value: 5432
 - name: DATABASE_USER
@@ -18,7 +18,7 @@
 - name: RAILS_APP
   value: "production"
 - name: REDIS_URL
-  value: "redis"
+  value: {{ .Values.appName }}-redis
 - name: REDIS_PORT
   value: "6379"
 - name: SECRET_KEY_BASE
