@@ -11,7 +11,7 @@ spec:
       containers:
       - name: {{ .Values.appName }}-setup
         image: {{ .Values.app.image }}
-        args: {{ .Values.migration.args }}
+        command: {{ .Values.migration.command }}
         env:
         {{- include "app.env" . | nindent 8 }}
       restartPolicy: Never

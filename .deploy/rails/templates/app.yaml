@@ -38,7 +38,7 @@ spec:
       containers:
       - name: {{ .Values.appName }}-rails
         image: {{ .Values.app.image }}
-        args: {{ .Values.app.args }}
+        command: {{ .Values.app.command }}
         env:
         {{- include "app.env" . | nindent 8 }}
         - name: RAILS_LOG_TO_STDOUT

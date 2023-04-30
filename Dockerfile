@@ -28,4 +28,4 @@ COPY . .
 
 RUN bundle exec rails assets:precompile
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["bundle", "exec"]
