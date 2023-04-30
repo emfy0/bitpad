@@ -22,7 +22,7 @@ redis:
 
 migration:
   enabled: true
-  command: "bash"
+  command: ["bash"]
   args: ["-c", "bundle exec rails db:create && bundle exec rails db:migrate"]
 
 ingress:
@@ -30,7 +30,7 @@ ingress:
 
 app:
   image: ghcr.io/emfy0/bitpad:latest
-  command: "bash"
+  command: ["bash"]
   args:  ["-c", "bundle exec rails s -p 3000 -b 0.0.0.0"]
   secrets:
     secretKeyBase:
