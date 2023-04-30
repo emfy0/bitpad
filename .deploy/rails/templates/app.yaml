@@ -34,6 +34,7 @@ spec:
       labels:
         app: {{ .Values.appName }}
         tier: rails
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
       - name: {{ .Values.appName }}-rails
