@@ -1,4 +1,4 @@
-{{- define "app.env" -}}
+{{- define "app.env" }}
 - name: DATABASE_NAME
   value: "{{ .Values.postgres.dbName }}"
 - name: DATABASE_URL
