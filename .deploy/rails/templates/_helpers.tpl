@@ -20,7 +20,7 @@
 - name: RAILS_ENV
   value: "production"
 - name: REDIS_URL
-  value: "{{ .Values.appName }}-redis"
+  value: "redis://{{ .Values.appName }}-redis:6379"
 - name: REDIS_PORT
   value: "6379"
 - name: SECRET_KEY_BASE
