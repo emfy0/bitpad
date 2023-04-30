@@ -4,6 +4,7 @@ kind: Job
 metadata:
   name: {{ .Values.appName }}-migration
 spec:
+  ttlSecondsAfterFinished: 15
   template:
     metadata:
       name: {{ .Values.appName }}-migration
