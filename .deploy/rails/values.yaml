@@ -22,7 +22,9 @@ redis:
 
 migration:
   enabled: true
-  args: ['rails db:create && rails db:migrate']
+  args: ['rails db:migrate']
+  createDb:
+    args: ['rails db:create || true']
 ingress:
   hostname: bitpad.ru
 

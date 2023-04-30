@@ -12,9 +12,15 @@ spec:
         date: "{{ now | unixEpoch }}"
     spec:
       containers:
-      - name: {{ .Values.appName }}-setup
+      - name: {{ .Values.appName }}-migrate
         image: {{ .Values.app.image }}
         args: {{ .Values.migration.args }}
+        env:
+        {{- include "app.env" . | nindent 8 }}
+      initContainers:
+      - name: {{ .Values.appName }}-createdb
+        image: {{ .Values.app.image }}
+        args: {{ .Values.migration.createDb.args }}
         env:
         {{- include "app.env" . | nindent 8 }}
       restartPolicy: Never
