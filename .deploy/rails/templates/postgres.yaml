@@ -39,7 +39,7 @@ spec:
       storage: {{ .Values.postgres.storage.size.value }}
   {{- end }}
 ---
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.appName }}-postgres
