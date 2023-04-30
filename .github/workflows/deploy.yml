@@ -34,7 +34,8 @@ jobs:
       run: |
         helm upgrade bitpad-prod .deploy/rails --install \
           -f .deploy/rails/values.yaml \
-          --namespace bitpad-prod
+          --namespace bitpad-prod \
+          --create-namespace
 
     - name: Cleanup
       run: |
