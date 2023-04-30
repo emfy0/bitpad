@@ -11,13 +11,15 @@ jobs:
 
     - name: Build the Docker image
       run: |
-        docker build -t ghcr.io/emfy0/bitpad:latest .
+        docker build -t ghcr.io/emfy0/bitpad:latest . --target rails
+        docker build -t ghcr.io/emfy0/bitpad_nginx:latest . --target nginx
     - name: Push docker image
       env:
         CR_PAT: ${{ secrets.DOCKER_REGESTRY_TOKEN }}
       run: |
         echo $CR_PAT | docker login ghcr.io -u emfy0 --password-stdin
         docker push ghcr.io/emfy0/bitpad:latest
+        docker push ghcr.io/emfy0/bitpad_nginx:latest
 
     - name: Setup credentials
       env:

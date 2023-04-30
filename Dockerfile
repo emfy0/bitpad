@@ -1,4 +1,4 @@
-FROM ruby:3.1.2-slim
+FROM ruby:3.1.2-slim as rails
 
 RUN apt update -q && \
     apt install -qy \
@@ -29,3 +29,15 @@ COPY . .
 RUN bundle exec rails assets:precompile
 
 ENTRYPOINT ["bundle", "exec"]
+
+LABEL org.opencontainers.image.source=https://github.com/emfy0/bitpad
+
+FROM nginx as nginx
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY .deploy/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=rails /code/public/ /usr/share/nginx/html/
+
+LABEL org.opencontainers.image.source=https://github.com/emfy0/bitpad_nginx

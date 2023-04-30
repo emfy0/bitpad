@@ -47,3 +47,7 @@ spec:
           value: "true"
         ports:
         - containerPort: 3000
+      - name: {{ .Values.appName }}-nginx
+        image: {{ .Values.app.nginx.image }}
+        ports:
+        - containerPort: 80

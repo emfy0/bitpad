@@ -33,3 +33,5 @@ app:
     secretKeyBase:
       name: secret-key-base
       key: secret-key-base
+  nginx:
+    image: ghcr.io/emfy0/bitpad_nginx:latest
