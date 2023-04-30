@@ -40,4 +40,4 @@ COPY .deploy/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=rails /code/public/ /usr/share/nginx/html/
 
-LABEL org.opencontainers.image.source=https://github.com/emfy0/bitpad_nginx
+LABEL org.opencontainers.image.source=https://github.com/emfy0/bitpad
