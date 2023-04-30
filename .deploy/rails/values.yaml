@@ -1,4 +1,4 @@
-appName: rails-app
+appName: bitpad
 
 postgres:
   enabled: true

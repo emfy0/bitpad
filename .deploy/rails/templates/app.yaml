@@ -18,6 +18,12 @@ metadata:
   lables: {{ .Values.appName }}
 spec:
   replicas: 1
+  minReadySeconds: 5
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
   selector:
     matchLables:
       app: {{ .Values.appName }}
