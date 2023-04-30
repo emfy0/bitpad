@@ -38,7 +38,6 @@ spec:
       containers:
       - name: {{ .Values.appName }}-rails
         image: {{ .Values.app.image }}
-        command: {{ .Values.app.command }}
         args: {{ .Values.app.args }}
         env:
         {{- include "app.env" . | nindent 8 }}
