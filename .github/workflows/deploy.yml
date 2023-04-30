@@ -33,7 +33,7 @@ jobs:
         KUBECONFIG: ${{ github.workspace }}/kube_config/config
       run: |
         helm upgrade bitpad-prod .deploy/rails --install \
-          -f .deploy/chart/rails.yaml \
+          -f .deploy/rails/values.yaml \
           --namespace bitpad-prod
 
     - name: Cleanup
