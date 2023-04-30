@@ -1,0 +1,37 @@
+name: Deploy production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_production:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        docker build -t ghcr.io/emfy0/bitpad:latest .
+    - name: Push docker image
+      env:
+        CR_PAT: ${{ secrets.DOCKER_REGESTRY_TOKEN }}
+      run: |
+        echo $CR_PAT | docker login ghcr.io -u emfy0 --password-stdin
+        docker push ghcr.io/emfy0/bitpad:latest
+        
+    - name: Setup credentials
+      env:
+        KUBECONFIG_FILE: ${{ secrets.KUBECONFIGFILE }}
+        KUBECONFIG_FOLDER: ${{ github.workspace }}/kube_config
+        KUBECONFIG: ${{ github.workspace }}/kube_config/config
+      run: |
+        mkdir -p $KUBECONFIG_FOLDER
+        echo "$KUBECONFIG_FILE" > $KUBECONFIG
+    - name: Setup credentials
+      run: |
+        helm upgrade bitpad-prod .deploy/rails --install \
+          -f .deploy/chart/rails.yaml \
+          --namespace bitpad-prod
+        
+    - name: Cleanup
+      run: |
+        rm -rf $KUBECONFIG_FOLDER
