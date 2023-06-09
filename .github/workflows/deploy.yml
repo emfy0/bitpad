@@ -11,8 +11,8 @@ jobs:
 
     - name: Build the Docker image
       run: |
-        docker build -t ghcr.io/emfy0/bitpad:latest . --target rails
-        docker build -t ghcr.io/emfy0/bitpad_nginx:latest . --target nginx
+        docker build -t ghcr.io/emfy0/bitpad:latest . --target rails --platform linux/arm64
+        docker build -t ghcr.io/emfy0/bitpad_nginx:latest . --target nginx --platform linux/arm64
     - name: Push docker image
       env:
         CR_PAT: ${{ secrets.DOCKER_REGESTRY_TOKEN }}
