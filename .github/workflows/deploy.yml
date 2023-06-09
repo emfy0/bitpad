@@ -9,6 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
     - name: Build the Docker image
       run: |
         docker build -t ghcr.io/emfy0/bitpad:latest . --target rails --platform linux/arm64
